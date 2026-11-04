@@ -115,8 +115,10 @@ jobs:
     name: Commit messages follow Conventional Commits and zero-emoji rule
     runs-on: ubuntu-latest
     steps:
+      # Check out the PR head, not the synthetic merge commit GitHub builds.
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
       - name: Validate all commits on branch
