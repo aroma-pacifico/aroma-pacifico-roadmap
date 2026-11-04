@@ -101,7 +101,7 @@ This repository operates an adapted publishing protocol for AI agents:
 2. **Branch Push**: Agents may push only their own assigned feature branch (`<type>/<issue>-<slug>`) to the remote repository.
 3. **Pull Request Creation**: Agents may open a Pull Request targeting `main`.
 4. **Prohibited Actions**: Agents must **never** push directly to `main`, **never** merge a pull request, **never** execute force-push (`git push --force`), **never** delete remote branches, and **never** create remote repositories.
-5. **Human Lead Authority**: The human lead reviews the PR, inspects verification output, and executes the squash merge to `main`.
+5. **Human Lead Authority**: The lead reviews the PR, inspects verification output, and executes the squash merge to `main`.
 
 ---
 
@@ -133,7 +133,7 @@ git push -u origin <type>/<issue-number>-<slug>
 Open a Pull Request using `.github/pull_request_template.md`.
 
 ### Step 4: Squash Merge and Cleanup
-After human lead review and approval:
+After lead review and approval:
 - The PR is squash-merged into `main` on GitHub.
 - Local working copies synchronize with trunk:
 ```bash

@@ -31,6 +31,7 @@ Emojis are strictly prohibited across all code, comments, documentation, commit 
 4. **Agent Publishing Boundary**:
    - Agents commit locally and may push only their own assigned feature branch to open a PR to `main`.
    - Agents never push to `main`, never merge, never force-push, and never create repositories. The lead reviews and merges.
+   - No tool attribution trailers (`Co-Authored-By` for an AI tool), generation notes or session URLs in commits or PR bodies.
 
 ---
 

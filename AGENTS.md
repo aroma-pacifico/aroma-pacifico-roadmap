@@ -67,7 +67,7 @@ Emojis are strictly prohibited across all surfaces. All communication and artifa
 ## 3. Requirements, Assumptions, and Truth
 
 - **Single source of truth**: `docs/case/case-statement.pdf` is the only source of project requirements.
-- **Decision and Assumption Log**: If a parameter, dimension, retention period, or design choice is not specified in `docs/case/case-statement.pdf`, it cannot be silently invented. It must be logged in the project decision log (`docs/decision-log.md`, created by task A01) with a unique ID (e.g., `DEC-001`).
+- **Decision and Assumption Log**: If a parameter, dimension, retention period, or design choice is not specified in `docs/case/case-statement.pdf`, it cannot be silently invented. It must be logged in the project decision log (`docs/decision-log.md`, created by task A01) with a unique ID: `ASM-NNN` for assumptions, `ADR-NNN` for architecture decision records (stored in `docs/adr/`) and `PD-NNN` for pending decisions.
 - **Never invent evidence**: Do not invent performance measurements, latency metrics, failover timings, human approvals, or rehearsal results. Label latency, failover, rollout, and recovery metrics as targets or future tests.
 
 ---
@@ -132,13 +132,14 @@ Refs #<issue-number>
 - Imperative mood, lowercase start, no trailing period, no emojis.
 - Body explains the rationale and trade-offs.
 - `Refs #<issue-number>` footer is mandatory.
+- No tool attribution: no `Co-Authored-By` trailer for an AI tool, no `Generated with` line, no session URL, and no notes about how the content was produced, in commits or PR bodies. `.claude/settings.json` suppresses Claude Code attribution; do not reintroduce it by hand.
 
 ### 6.5 Agent Publishing Model
 - **Agents commit locally**: Local commits are expected as work progresses.
 - **Feature branch push**: Agents may push only their own assigned feature branch (`<type>/<issue>-<slug>`) to the remote repository.
 - **Pull Request creation**: Agents may open a Pull Request targeting `main`.
 - **Prohibited agent actions**: Agents must never push directly to `main`, never merge PRs, never force-push (`git push --force`), never delete remote branches, and never create repositories.
-- **Review and merge**: The human lead reviews the PR, inspects verification output, and executes the squash merge.
+- **Review and merge**: The lead reviews the PR, inspects verification output, and executes the squash merge.
 
 ---
 
@@ -168,7 +169,7 @@ The 26 `pc-iac` rules (`standards/iac-rules/pc-iac-001.md` through `pc-iac-026.m
 - **No provider or backend blocks in child modules**: Child modules must remain pure and reusable (`pc-iac-005.md`).
 - **Variables and outputs**: Every variable must declare `type` and `description` (`pc-iac-002.md`). Every output must declare `description` (`pc-iac-007.md`). No hardcoded environment-specific defaults.
 - **Multiplicity**: Use `for_each` for multiple resource instances; use `count` only for boolean enabling (`count = var.enabled ? 1 : 0`) (`pc-iac-010.md`).
-- **Version constraints**: Minimum Terraform core `>= 1.14`. Pessimistic provider constraints `~>` (`pc-iac-006.md`). Scoped `.terraform.lock.hcl` committed in root stacks only.
+- **Version constraints**: Minimum Terraform core with `>=` (for example `>= 1.14.0`). Providers use a strict `~>` range in root stacks and a compatible `>=` minimum in reference modules (`pc-iac-006.md`). Scoped `.terraform.lock.hcl` committed in root stacks only.
 - **Remote state**: Remote backend in S3 with encryption, versioning, and state locking (`pc-iac-008.md`). Strictly no local state.
 - **Refactoring**: Renaming or moving a resource address requires a `moved` block. Never rename in place without `moved` (`standards/terraform-iac-best-practices.md` §12).
 - **Secrets**: Mark secret variables with `sensitive = true` (`pc-iac-016.md`). Never commit plaintext secrets.

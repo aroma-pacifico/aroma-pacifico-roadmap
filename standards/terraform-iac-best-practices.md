@@ -48,7 +48,7 @@ This is a standards document, not a tutorial. It has three jobs.
 
 1. **Set the bar.** Part I is what correct Terraform looks like here, drawn from HashiCorp's official style guide and the community conventions that have converged around it.
 2. **Constrain the agents.** Part II is the part that matters most for this project, and the part that generic Terraform guides omit. It is written as rules an agent can follow and a reviewer can check.
-3. **Set the requirements.** Part IV defines the conformance requirements and adoption checklist for the upcoming `aroma-pacifico-iac` repository (task B01).
+3. **Set the requirements.** Part IV defines the conformance requirements and adoption checklist for the IaC repository created in task B01.
 
 **Wiring it into the toolchain.** This file is the source of truth; it is not automatically loaded by anything. To make it operative:
 
@@ -594,7 +594,7 @@ Before any of that, three context checks that do not require reading code at all
 
 ## 23. Conformance table
 
-Baseline requirements for the upcoming `aroma-pacifico-iac` repository (task B01). Every reference module and environment stack must satisfy these criteria.
+Baseline requirements for the IaC repository created in task B01. Every reference module and environment stack must satisfy these criteria.
 
 | Practice | Standard | Status | Action |
 |---|---|---|---|

@@ -69,7 +69,7 @@ Use `.github/pull_request_template.md` and provide:
 5. Risk and rollback considerations.
 
 ### Rules:
-1. One approval required from the human lead before merging. Self-merge is prohibited.
+1. One approval required from the lead before merging. Self-merge is prohibited.
 2. All CI checks must pass.
 3. Squash merge only.
 4. Never force-push a branch under review.

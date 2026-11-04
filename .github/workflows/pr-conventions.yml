@@ -59,8 +59,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Branch name follows <type>/<issue-number>-<slug>
+        env:
+          BRANCH: ${{ github.head_ref }}
         run: |
-          branch="${{ github.head_ref }}"
+          branch="$BRANCH"
           pattern='^(feat|fix|docs|refactor|perf|test|build|ci|chore|revert)/[0-9]+-[a-z0-9]+(-[a-z0-9]+)*$'
           if ! printf '%s' "$branch" | grep -qE "$pattern"; then
             echo "::error::Branch '$branch' does not match <type>/<issue-number>-<slug>."
@@ -70,9 +72,12 @@ jobs:
           echo "Branch name OK: $branch"
 
       - name: Zero-emoji check on PR title and branch
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          BRANCH: ${{ github.head_ref }}
         run: |
-          title="${{ github.event.pull_request.title }}"
-          branch="${{ github.head_ref }}"
+          title="$TITLE"
+          branch="$BRANCH"
           python3 -c '
           import sys, re
           title = sys.argv[1]
@@ -85,9 +90,12 @@ jobs:
           ' "$title" "$branch"
 
       - name: No non-English text in title or branch
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          BRANCH: ${{ github.head_ref }}
         run: |
-          title="${{ github.event.pull_request.title }}"
-          branch="${{ github.head_ref }}"
+          title="$TITLE"
+          branch="$BRANCH"
           fail=0
 
           if printf '%s' "$title $branch" | grep -qP '[áéíóúñÁÉÍÓÚÑ¿¡]'; then
@@ -112,9 +120,11 @@ jobs:
           fetch-depth: 0
 
       - name: Validate all commits on branch
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          git fetch origin "${{ github.base_ref }}" --depth=200
-          commits=$(git rev-list "origin/${{ github.base_ref }}..HEAD")
+          git fetch origin "$BASE_REF" --depth=200
+          commits=$(git rev-list "origin/$BASE_REF..HEAD")
           if [ -z "$commits" ]; then
             echo "No commits found on branch to check."
             exit 0
